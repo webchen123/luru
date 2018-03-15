@@ -43,7 +43,7 @@
             $passwd = md5($this->input->post('passwd'));
             $captcha = $this->input->post('capword');
             $capword = $this->session->capword;
-            if($capword!=$captcha){
+            if(strtolower($capword)!=strtolower($captcha)){
                 echo '<script>alert("验证码不正确");window.location.href="/login/"</script>';
                 exit;
             }

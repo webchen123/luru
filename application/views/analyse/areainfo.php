@@ -20,6 +20,7 @@
         var datasource = <?php echo $sourcejson?$sourcejson:'""';?>;
         var dataarea = <?php echo $areajson?$areajson:'""';?>;
         for(var i=0;i<dataarea.length;i++){
+            if(i>=7)break;
             dataarea[i].name=(getAreaNamebyID(String(dataarea[i].name))).substr(3);
         }
         var option = {

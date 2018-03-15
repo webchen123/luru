@@ -9,6 +9,7 @@
             }
         }
         public function index(){
+		
             $this->load->view('public',$_SESSION);
         }
     }

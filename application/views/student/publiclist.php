@@ -9,7 +9,7 @@
     <table class="table table-hover text-center" id="table">
         <tbody>
         <tr>
-            <th width="10%">资讯日期</th>
+            <th width="10%">咨询日期</th>
             <th width="10%">网聊老师</th>
             <th width="10%">学生姓名</th>
             <th width="10%">电话号码</th>
@@ -21,8 +21,8 @@
         <tbody id="goods3">
         <?php foreach($data as $v) {
          ?>
-        <tr class="<?php echo !$v['phone']||!$v['qq']||!strtotime($v['atime'])||!strtotime($v['vtime'])?'lack_bg':'';?>" infoid="<?=$v['id']?>">
-            <td><?php echo date('Y/m/d',strtotime($v['zxdate']));?> </td>
+        <tr class="<?php echo !$v['phone']?'lack_bg':'';?>" infoid="<?=$v['id']?>">
+            <td><?php echo date('Y/m/d H:i:s',strtotime($v['zxdate']));?> </td>
             <td><?=$v['kfname'] ?></td>
             <td><?php echo $v['name'];?></td>
             <td><?php echo array_pop((explode('/',$v['phone'])));?></td>
@@ -80,7 +80,11 @@
             })
             //信息认领
             $('.getinfo').click(function(){
-                var id=$('#studentinfo').attr('infoid');
+                if($(this).parents('tr')){
+                    var id = $(this).parents('tr').attr('infoid');
+                }else{
+                    var id=$('#studentinfo').attr('infoid');
+                }
                 if(!id){
                     alert("请先选择要操作的学生信息\r\n(红色边框的为选中信息)");
                     return;

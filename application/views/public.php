@@ -12,6 +12,10 @@
     <script type="text/javascript" src="/public/js/AreaData.min.js"></script>
     <script type="text/javascript" src="/public/js/Area.js"></script>
     <script src="/public/js/main.js" type="text/javascript"></script>
+    <script>
+        function stop(){ return false; }
+        document.oncontextmenu=stop;
+    </script> 
 </head>
 <body>
 <div id="header">
@@ -20,8 +24,13 @@
     </div>
     <div class="float-right">
         <a  class="icon-power-off flash-hover txt radius-circle  txt-small" href="/login/loginout"></a>
-
-        <a data-url="/user/edit/<?=$bfdyt_id?>/" href="javascript:;" style="text-decoration: underline" class="content icon-check-square-o">设置</a>
+        <?php
+            if($bfdyt_role<=0) {
+        ?>
+            <a data-url="/user/edit/<?=$bfdyt_id?>/" href="javascript:;" style="text-decoration: underline" class="content icon-check-square-o">设置</a>
+         <?php 
+            } 
+         ?>
         <a data-url="/user/edit/<?=$bfdyt_id?>/" class="content icon-user">
         <?php switch ($bfdyt_role) {
             case '0':
@@ -96,6 +105,11 @@
         <li data-num="19" class="subMenu"><a  class="content" data-url="/analyse/joininfo" site="1"  href="javascript:;" ><span class="icon-caret-right"></span> 报名数据</a></li>
     <?php 
       }
+      if($_SESSION['bfdyt_role']<=1){
+     ?>
+        <li data-num="20" class="subMenu"><a  class="content" data-url="/analyse/getexcel" site="1"  href="javascript:;" ><span class="icon-caret-right"></span> 导出数据</a></li>
+    <?php 
+      }
      ?>
     </ul>
 </div>
@@ -116,7 +130,7 @@
 </html>
 <script type="text/javascript">
     $(function(){
-        var index = <?php echo $_SESSION['bfdyt_role']==3?'"/student/frontindex/"':'"/student/index/"';?>;
+        var index = <?php echo $_SESSION['bfdyt_role']==3?'"/student/indexfront/"':'"/student/index/"';?>;
         get_content(index);
     })
 </script>

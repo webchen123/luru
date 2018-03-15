@@ -33,7 +33,7 @@ $(document).ready(function () {
         }
     });
     $('input[name=capword]').blur(function(){
-        var val=$(this).val();
+        var val=$(this).val().toLowerCase();
         var reg = /^[a-z0-9]{4}$/;
         if(reg.test(val)){
             $(this).css('border','0px')

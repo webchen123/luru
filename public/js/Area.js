@@ -11,6 +11,8 @@ function initComplexArea(a, k, h, p, q, z, d, b, l) {
     var n = document.getElementById(h);//区县
     var e = 0;
     var c = 0;
+    var front=0;
+    var tem = 0;
     //
     var arr = d+""+b;//代表市的数组编号
     var dbl = d+""+b + ""+l;//代表区的数组编号
@@ -46,12 +48,17 @@ function initComplexArea(a, k, h, p, q, z, d, b, l) {
                     }
                 }
             }
-            m[c] = new Option(p[e], e);
+            tem = new Option(p[e], e);
             if (d == e) {
-                m[c].selected = true;//为省一级赋默认值
+                tem.selected = true;//为省一级赋默认值
             }
-            c++
+            if(e == 13||e==43||e==11){//提升对应省份到最前
+                m.insertBefore(tem,m[2]);
+            }else{
+                m.appendChild(tem);
+            }
         }
+        m.removeChild(m[0]);
         o[0] = new Option("请选择 ", 0);//为市一级赋“请选择”初始值
         if (q[d] != undefined) {
             //o[0] = new Option("请选择 ", 0);
@@ -79,7 +86,7 @@ function initComplexArea(a, k, h, p, q, z, d, b, l) {
             }
         }
         //编辑时如果两级把第三级隐藏
-        if (d == 11 || d == 12 || d == 31 || d == 71 || d == 50 || d == 81 || d == 82) {
+        if (d == 51 || d == 12 || d == 31 || d == 71 || d == 50 || d == 81 || d == 82) {
             if ($("#" + h + "_div"))
             { $("#" + h + "_div").hide();}
         }
@@ -101,7 +108,7 @@ function changeComplexProvince(f, k, e, d ) {
         }
     }
     removeOptions(g); g[0] = new Option("请选择 ", 0);
-    if (f == 11 || f == 12 || f == 31 || f == 71 || f == 50 || f == 81 || f == 82) {
+    if (f == 51 || f == 12 || f == 31 || f == 71 || f == 50 || f == 81 || f == 82) {
         if ($("#" + d + "_div"))
         { $("#" + d + "_div").hide();}
     }
@@ -113,7 +120,7 @@ function changeComplexProvince(f, k, e, d ) {
 //改变市下拉框事件
 function changeCity(c, a, t) {
     var ProvincenNum=$("#seachprov").val();
-    if ( ProvincenNum== 11 || ProvincenNum == 12 || ProvincenNum == 31 || ProvincenNum == 71 || ProvincenNum == 50 || ProvincenNum == 81 	|| ProvincenNum == 82) {
+    if ( ProvincenNum== 51 || ProvincenNum == 12 || ProvincenNum == 31 || ProvincenNum == 71 || ProvincenNum == 50 || ProvincenNum == 81 	|| ProvincenNum == 82) {
         return;
     }
 

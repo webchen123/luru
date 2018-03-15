@@ -1,9 +1,6 @@
 <div class="panel admin-panel">
     <div class="padding border-bottom">
         <ul class="search" style="padding-left:10px;">
-            <?php
-                echo !$zystatus?'<li> <a class="button border-main icon-plus-square-o" id="addPart" style="cursor:pointer">信息转接</a> </li>':'';
-             ?>
             <li><input type="text" name="search" class="input float-left" placeholder="请输入你要查询的信息"></li>
             <li><input type="button" class=" button bg-main btn_copy" id="searchButton" value="搜索"></li>
         </ul>
@@ -11,25 +8,25 @@
     <table class="table table-hover text-center" id="table">
         <tbody>
         <tr>
-            <th width="10%">资讯日期</th>
+            <th width="10%">咨询日期</th>
             <th width="10%">网聊老师</th>
             <th width="10%">学生姓名</th>
             <th width="10%">电话号码</th>
             <th width="10%">QQ/微信</th>
-            <th width="10%">回访时间</th>
-            <th>操作</th>
+            <!-- <th width="10%">回访时间</th> -->
+            <th width="10%"><?php echo $zystatus?'认领老师':'操作';?></th>
         </tr>
         </tbody>
         <tbody id="goods3">
              <?php foreach($data as $v) {
              ?>
-            <tr class="<?php echo !$v['phone']||!$v['qq']||!strtotime($v['atime'])||!strtotime($v['vtime'])?'lack_bg':'';?>" infoid="<?=$v['id']?>">
-                <td><?php echo date('Y/m/d',strtotime($v['zxdate']));?> </td>
+            <tr class="<?php echo !$v['phone']?'lack_bg':'';?>" infoid="<?=$v['id']?>">
+                <td><?php echo date('Y/m/d H:i:s',strtotime($v['zxdate']));?> </td>
                 <td><?=$v['kfname'] ?></td>
                 <td><?php echo $v['name'];?></td>
                 <td><?php echo array_pop((explode('/',$v['phone'])));?></td>
                 <td><?php echo $v['qq'];?></td>
-                <td><?php echo strtotime($v['vtime'])?$v['vtime']:''; ?></td>
+                <!-- <td><?php //echo strtotime($v['vtime'])?$v['vtime']:''; ?></td> -->
                 <?php 
                     if(!$zystatus){
                         if($visit==0){
@@ -38,7 +35,7 @@
                             echo '<td><a href="javascript:;" class="button border-sub cancel " name="f4d707f72c60424bad10b1dd659f3d32"> 已回访</a></td>';
                         }
                     }else{
-                        echo ' <td><a href="javascript:;" class="button border-sub cancel" name="f4d707f72c60424bad10b1dd659f3d32"> 信息已转接</a></td>';
+                        echo ' <td> '.($frontusers[$v['frontuser']]).'</td>';
                     }
 
                  ?>
@@ -49,8 +46,14 @@
     <div class="padding border-bottom">
        <div style="margin: 0 auto;text-align: center;padding-top:60px;">
                 <a href="javascript:;" data-url=""            class=" button border-main"> 第(<span id="page" style="color:#f00" ><?=$nowpage?></span>)页</a>
+                <?php 
+                   if($maxpage){
+                  ?>
                 <a href="javascript:;" data-url="/student/index/<?=$prepage?>/?visit=<?=$visit?>&zystatus=<?=$zystatus?>&search=<?=$search?>"class="content button border-main" id="Previous"> 上一页</a>
                 <a href="javascript:;" data-url="/student/index/<?=$nextpage?>/?visit=<?=$visit?>&zystatus=<?=$zystatus?>&search=<?=$search?>"class="content button border-main" id="next"> 下一页</a>
+                <?php 
+                    }
+                 ?>
                 <a href="javascript:;" data-url=""            class=" button  border-main"> 共(<span id="pagenum" style="color:#f00"><?=$maxpage?></span>)页</a>
             </div>
     </div>

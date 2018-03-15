@@ -145,7 +145,7 @@
             $this->load->database();
             $res = $this->db->delete('bfdyt_user',array('bfdyt_id'=>$id));
             if($res){
-                $this->db->update('bfdyt_studentinfo', array('bfdyt_backuser'=>$_SESSION['bfdyt_id']), "bfdyt_bcakuser = ".$id);
+                $this->db->update('bfdyt_studentinfo', array('bfdyt_backuser'=>$_SESSION['bfdyt_id']), "bfdyt_backuser = ".$id);
                 $this->db->update('bfdyt_studentinfo', array('bfdyt_frontuser'=>$_SESSION['bfdyt_id']), "bfdyt_frontuser = ".$id);
                 echo 1;
             }else{

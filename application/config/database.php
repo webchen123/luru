@@ -75,9 +75,12 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'root',
+	 'hostname' => 'localhost',
+	 'username' => 'root',
+	'password' => 'root',	
+	// 'hostname' => 'rdsm380cz39b6or3y7gc.mysql.rds.aliyuncs.com',
+	// 'username' => 'bfdyt_fenzhan',
+	// 'password' => 'BfdyT@#6688',
 	'database' => 'luru',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

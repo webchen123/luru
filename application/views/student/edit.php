@@ -1,10 +1,10 @@
-<div class="bouncein">
+<div class="bouncein " id="studentinfo" infoid="<?php echo $data['bfdyt_id'];?>">
     <div class="panel admin-panel">
         <div class="padding border-bottom container-layout">
             <!--第1排-->
             <div class="form-group w80">
                 <div class="label">
-                    <label>学生姓名：</label>
+                    <label><span style="color:red">*</span>学生姓名：</label>
                 </div>
                 <div class="field w25">
                     <input type="text" class="input w75" id="studentName" onblur="username()" value="<?=$data['bfdyt_name'];?>" placeholder="学生姓名"/>
@@ -50,7 +50,7 @@
             <!--第3排-->
             <div class="form-group w100">
                 <div class="label">
-                    <label>电话号码：</label>
+                    <label><span style="color:red">*</span>电话号码：</label>
                 </div>
                 <div class="field w17">
                     <input type="text"  class="input w80" id="phone" onblur="phone()" value="<?php echo $data['bfdyt_phone'] ?>" placeholder="请输入电话号码">
@@ -92,7 +92,7 @@
             </div>
             <div class="form-group w100">
                 <div class="label">
-                    <label>地区：</label>
+                    <label><span style="color:red">*</span>地区：</label>
                 </div>
                 <div class="field w80">
                     <select name="seachprov" class="input w17 margin-right" id="seachprov" onchange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');">
@@ -109,48 +109,57 @@
             <!--第2排-->
             <div class="form-group w80">
                 <div class="label">
-                    <label>咨询日期：</label>
-                </div>
-                <div class="field w17">
-                    <input type="date" id="zxData"  value="<?php echo $data['bfdyt_zxdate']?>" class="input w80"/>
-                    <div class="tips"></div>
-                </div>
-                <div class="label">
                     <label>星级：</label>
                 </div>
                 <div class="field w17">
                     <select class="input w80" id="xing">
-                        <option value="1">1星级</option>
-                        <option value="2">2星级</option>
-                        <option value="3">3星级</option>
-                    </select>
-                </div>
-                <div class="label">
-                    <label>咨询时间：</label>
-                </div>
-                <div class="field w17">
-                    <select class="input w80" id="stopTime">
-                        <option value="0">-请选择-</option>
                         <?php 
-                            for($i=8;$i<24;$i++){
-                                if($data['bfdyt_zxtime']==$i){
+                            foreach ($star  as $k => $v) {
+                                if($data['bfdyt_star']==$k){
                                     $select='selected="selected"';
                                 }else{
                                     $select='';
                                 }
-                                echo '<option value="'.$i.'"'.$select.'>'.$i.'点</option>';
+                                echo '<option value="'.$k.'" '.$select.'>'.$v.'</option>';
                             }
                          ?>
                     </select>
                 </div>
                 <div class="label">
-                    <label>咨询状态：</label>
+                    <label>回访状态：</label>
                 </div>
                 <div class="field w17">
-                    <select class="input w80" id="stzt">
-                        <option value="0">请选择</option>
-                        <option value="1" <?php echo $data['bfdyt_zxstatus']=='1'?'selected="selected"':'';?>>已到校</option>
-                        <option value="2" <?php echo $data['bfdyt_zxstatus']=='2'?'selected="selected"':'';?>>未到校</option>
+                    <select class="input w80" name="visitstatus" id="visitstatus">
+                        <?php 
+                            foreach ($visitstatus  as $k => $v) {
+                                if($data['bfdyt_zxstatus']==$k){
+                                    $select='selected="selected"';
+                                }else{
+                                    $select='';
+                                }
+                                echo '<option value="'.$k.'" '.$select.'>'.$v.'</option>';
+                            }
+                         ?>
+                    </select>
+                </div>
+                <div class="label">
+                    <label>报名状态</label>
+                </div>
+                <div class="field w17">
+                    <select class="input w80" name="joinstatus" id="joinstatus">
+                        <option value="0" <?php echo $data['bfdyt_isjoin']=='0'?'selected="selected"':'';?>>未报名</option>
+                        <?php 
+                            foreach ($major  as $k => $v) {
+                                if($data['bfdyt_isjoin']==1){
+                                    if($data['bfdyt_major']==$k){
+                                        $select='selected="selected"';
+                                    }else{
+                                        $select='';
+                                    }
+                                }
+                                echo '<option value="'.$k.'" '.$select.'>'.$v.'</option>';
+                            }
+                         ?>
                     </select>
                 </div>
             </div>
@@ -175,7 +184,7 @@
                     </select>
                 </div>
                 <div class="label">
-                    <label>来源渠道：</label>
+                    <label><span style="color:red">*</span>来源渠道：</label>
                 </div>
                 <div class="field w17">
                     <select class="input w80" id="tool">
@@ -183,7 +192,7 @@
                         <?php 
                             foreach ($source as $k => $v) {
                                 # code...
-                                if($data['bfdyt_major']==$k){
+                                if($data['bfdyt_source']==$k){
                                     $select='selected="selected"';
                                 }else{
                                     $select='';
@@ -198,7 +207,6 @@
                 </div>
                 <div class="field w17">
                     <select class="input w80" id="system">
-                        <option value="0">-请选择-</option>
                         <?php 
                             foreach($learnmonth as $k=>$v){
                                if($data['bfdyt_learnmonth']==$k){
@@ -220,14 +228,52 @@
                     <div class="tips"></div>
                 </div>
             </div>
-            <div class="form-group w80">
-                <div class="label">
-                    <label>备注：</label>
+            <div class="clear"></div>
+            <div class="addbz">
+                <div class="w100">
+                    <div style="color: #09f;font-size: 18px">备注：</div>
+                    <div class="remark_info w80 padding-top">
+                        <?php foreach($remark as $k=>$v) {
+
+                         ?>
+                        <div class="remark_module">
+                            <div class="remark_title">
+                            <?php 
+                                echo date('Y年m月d日 H:i:s',strtotime($v['bfdyt_time']));
+                                $week=array(
+                                    '1'=>'一',
+                                    '2'=>'二',
+                                    '3'=>'三',
+                                    '4'=>'四',
+                                    '5'=>'五',
+                                    '6'=>'六',
+                                    '7'=>'日'
+                                    );
+                                echo '星期'.$week[date('N',strtotime($v['bfdyt_time']))];
+                             ?>
+                             ，网络咨询 [
+                            <?php 
+                                echo $v['bfdyt_username'];
+                             ?>
+                             ]录入回访信息。 回访状态：
+                            <?php 
+                                echo $visitstatus[$v['bfdyt_zxstatus']];
+                             ?>
+                             </div>
+                            <div class="remark_content">
+                                <?php
+                                    echo $v['bfdyt_content'];
+                                 ?>
+                            </div> 
+                        </div>
+                        <?php 
+                        }
+                        ?>
+                    </div>
                 </div>
-                <div class="field w80">
-                    <textarea name="desc" placeholder="请输入内容" id="htremark" class="textarea w50"><?php echo $data['bfdyt_htremark'];?></textarea>
+                <div>
+                    <a class="button border-sub icon-plus-square-o" id="addBZ"  style="cursor:pointer"> 添加备注</a>
                 </div>
-            </div>
             <div class="form-group w25" style="margin: 0 auto;padding-top:20px">
                 <div class="button bg-main" onclick="addInfo()" style="margin-left: 10px;cursor: pointer">修改</div>
             </div>
@@ -286,61 +332,58 @@
         var reg=/^([\u4e00-\u9fa5]){2,7}$/;
         return rule(str,reg)
     }
-    //age
-    function userAge(){
-        var str=$('#studentAge');
-        var reg=/^([2-5]\d)|60$/;
-        return rule(str,reg)
-    }
-    //phone || qq,weixin 二个填一个
-    function ery(){
-        var phone=$('#phone');
-        var qq=$("#qq");
-        if(phone.val()!="" || qq.val()!=""){
-            return true;
-        }else {
-            alert('请填写qq或者微信号码');
-            return false
-        }
-    }
+    // //age
+    // function userAge(){
+    //     var str=$('#studentAge');
+    //     var reg=/^([2-5]\d)|60$/;
+    //     return rule(str,reg)
+    // }
+    // //phone || qq,weixin 二个填一个
+    // function ery(){
+    //     var phone=$('#phone');
+    //     var qq=$("#qq");
+    //     if(phone.val()!="" || qq.val()!=""){
+    //         return true;
+    //     }else {
+    //         alert('请填写qq或者微信号码');
+    //         return false
+    //     }
+    // }
     //phone
     function phone(){
         var phone=$('#phone');
-        var regPhone=/^1[34578]\d{9}/;
+        var regPhone=/^1[3456789]\d{9}/;
+        var value = phone.val();
         if(!regPhone.test(phone.val())){
-            if((!phone.val())&&(wq())){
-                return false;
-            }
             fls(phone);
             return false;
         }else {
-            tru(phone);
-            return true
-        }
-    }
-    //qq
-    function wq(){
-        var qq=$("#qq");
-        var regQQ=/^[0-9a-zA_Z]+$/;
-        if(!regQQ.test(qq.val())){
-            if((!qq.val())&&(phone())){
-                return false;
-            }
-            fls(qq);
-            return false;
-        }else {
-            tru(qq);
-            return true
+            var res = true;
+            console.log(value);
+            $.ajax({
+                url:'/student/checkinfo',
+                data:{'value':value},
+                type:'post',
+                async:false,
+                success:function(data){
+                   if(data['code']==0){
+                        res = true;
+                        tru(phone);
+                   }else{
+                        fls(phone);
+                        alert('此电话号信息已添加,\r\n 添加人为'+data['owner']);
+                        res = false;
+                   }
+                }
+            })
+            return res;
         }
     }
     //判断select是否选中
     function qu(){
-        var vocation=$("#vocation").val();   //职业状况
-        var zxdata=$("#zxData").val();        //咨询日期
-        var stopTime=$("#stopTime").val();     //咨询时间
-        var stzt=$("#stzt").val();            //咨询状态；
+        
         var tool=$("#tool").val();            //来源渠道
-        if(vocation!=0  && seachprov!=0 && seachcity!=0 && stopTime!=0 && stzt!=0 &&  tool!=0 ){
+        if(tool!=0 ){
             return true
         }else {
             return false
@@ -374,7 +417,7 @@
     }
     //----添加信息-----
     function addInfo(){
-        if(ery()==true && username()==true && userAge()==true && qu()==true){
+        if(username()==true  && qu()==true){
             //获取表单信息
             var data={};
             data.name=$("#studentName").val();
@@ -385,19 +428,21 @@
             data.qq=$('#qq').val();
             data.job=$('#vocation').val();
             data.visitime=$('#dataTime').val();
-            data.pro=$('#seachprov').val();
-            data.city=$('#seachcity').val();
-            data.county=$('#seachdistrict').val();
-            data.zxdate=$('#zxData').val();
+            if($('#seachcity').val()){
+                data.pro=$('#seachprov').val();
+                data.city=$('#seachcity').val();
+                data.county=$('#seachdistrict').val();
+            }
+            data.zxstatus=$('#visitstatus').val();
+            // data.zxdate=$('#zxData').val();
             data.star=$('#xing').val();
-            data.zxtime=$('#stopTime').val();
-            data.zxstatus=$('#stzt').val();
+            // data.zxtime=$('#stopTime').val();
+            data.joinstatus=$('#joinstatus').val();
             data.major=$('#consult').val();
             data.learnmonth=$('#tool').val();
             data.source=$('#tool').val();
             data.arivetime=$('#getData').val();
-            data.remark=$('#remark').val();
-            data.id = <?php echo $data['bfdyt_id'];?>;
+            data.id = $('#studentinfo').attr('infoid');
             $.ajax({
                 url:'/student/doedit/',
                 type:'post',
@@ -416,6 +461,57 @@
         }else{
             alert('请检查信息是否填写完整');
         }
+
+    }
+    var tin=true;
+    var index=0;
+    $("#addBZ").on("click",function(){
+        if(tin){
+            $(".addbz").append("<textarea style='width: 60%;height: 200px'></textarea>");
+            $(this).text("保存");
+            tin=false;
+        }else{
+            var at=$(".addbz textarea").val();
+            if(at!="" && at!=null){
+                var userName="<?php echo $_SESSION['bfdyt_name']; ?>";
+                var hfInfo="<?php echo $visitstatus[$data['bfdyt_zxstatus']]; ?>";
+                var zxstatus=$('#visitstatus').val();
+                var infoid=$('#studentinfo').attr('infoid');
+                var remarkCon=at;
+                var info=nd()+" ，网络咨询 ["+userName+"]录入回访信息。 回访状态："+hfInfo;
+                var remarkContent='<div class="remark_module"><div class="remark_title">'+info+'</div> <div class="remark_content">'+remarkCon+'</div> </div>';
+                $(".remark_info").append( remarkContent);
+                $.ajax({
+                    url:'/student/addremark',
+                    data:{'name':userName,'content':at,'zxstatus':zxstatus,'infoid':infoid},
+                    type:'get',
+                    success:function(data){
+                        if(data==1){
+                            alert('添加成功');
+                        }else{
+                            alert('请联系管理员');
+                        }
+                    }, 
+                    error:function(){
+                        alert('请联系管理员');
+                    }
+                })
+            }
+            $(".addbz textarea").remove();
+            $(this).text("添加备注");
+            tin=true;
+        }
+    })
+    function nd(){
+        var date = new Date();
+        this.year = date.getFullYear();
+        this.month = date.getMonth() + 1;
+        this.date = date.getDate();
+        this.day = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六")[date.getDay()];
+        this.hour = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+        this.minute = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+        this.second = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+        return  this.year + "年" + this.month + "月" + this.date + "日 " + this.hour + ":" + this.minute + ":" + this.second + " " + this.day;
     }
 </script>
 

@@ -83,6 +83,7 @@
                     <input type="reset" class="button bg-main style="cursor: pointer" margin-left" value="重置">
                 </div>
             </div>
+             <p style="color: red">注意：登录名请使用字母数字组合</p>
         </div>
     </div>
 </div>

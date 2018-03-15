@@ -16,7 +16,7 @@
     <table class="table table-hover text-center" id="table">
         <thead>
         <tr>
-            <th width="10%">资讯日期</th>
+            <th width="10%">咨询日期</th>
             <th width="10%">认领时间</th>
             <th width="10%">网聊老师</th>
             <th width="10%">认领老师</th>
@@ -30,10 +30,10 @@
         <tbody id="goods3">
         <?php foreach($data as $v) {
          ?>
-        <tr class="<?php echo !$v['phone']||!$v['qq']||!strtotime($v['atime'])||!strtotime($v['vtime'])?'lack_bg':'';?>" infoid="<?=$v['id']?>">
-            <td><?php echo date('Y/m/d',strtotime($v['zxdate']));?> </td>
+        <tr class="<?php echo !$v['phone']?'lack_bg':'';?>" infoid="<?=$v['id']?>">
+            <td><?php echo date('Y/m/d H:i:s',strtotime($v['zxdate']));?> </td>
             <td><?php echo date('Y/m/d',strtotime($v['rltime']));?> </td>
-            <td><?php echo $backuser[$v['backuserid']];?></td>
+            <td><?php echo $v['backuserid']?$backuser[$v['backuserid']]:'前台直接录入';?></td>
             <td><?=$v['kfname'] ?></td>
             <td><?php echo $v['name'];?></td>
             <td><?php echo array_pop((explode('/',$v['phone'])));?></td>
@@ -65,8 +65,15 @@
     <div class="padding border-bottom">
         <div style="margin: 0 auto;text-align: center;padding-top:60px;">
                 <a href="javascript:;" data-url=""            class=" button border-main"> 第(<span id="page" style="color:#f00" ><?=$nowpage?></span>)页</a>
+                <?php 
+                   if($maxpage){
+
+                  ?>
                 <a href="javascript:;" data-url="/student/indexfront/<?=$prepage?>/?search=<?=$search?>&joinstatus=<?=$joinstatus?>"class="content button border-main" id="Previous"> 上一页</a>
                 <a href="javascript:;" data-url="/student/indexfront/<?=$nextpage?>/?search=<?=$search?>&joinstatus=<?=$joinstatus?>"class="content button border-main" id="next"> 下一页</a>
+                <?php 
+                    }
+                 ?>
                 <a href="javascript:;" data-url=""            class=" button  border-main"> 共(<span id="pagenum" style="color:#f00"><?=$maxpage?></span>)页</a>
             </div>
     </div>

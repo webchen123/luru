@@ -190,8 +190,26 @@ input::-webkit-input-placeholder{
     width: 100px;
 }
 /*admin*/
-.lack_bg{
-    background: rgba(92, 89, 182, 0.15);
+.lack_bg{           /*不完整信息提示*/
+    background: rgba(92, 89, 182, 0.2);
+}
+.yzj{               /*已转接信息提示*/
+    background: rgba(255,174,0,.2);
+}
+.remark_module{
+    background: #eff8ff;
+    font-size: 16px;
+    padding: 10px 0;
+}
+.remark_title{
+    border-top: 1px solid #000000;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 5px;
+}
+.remark_content{
+    background: #fff;
+    height: 60px;
+    color: blue;
 }
 /*td{
     width:100%;
