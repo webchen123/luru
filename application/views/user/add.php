@@ -12,23 +12,36 @@
                     <select name="role"  id="role">
                          <?php 
                             if($_SESSION['bfdyt_role']==0){
-                                echo '<option value="1">客服主管</option>';
+                                echo '<option value="1">校区主管</option>';
+                                echo '<option value="4">前台主管</option>';
+                                echo '<option value="5">后台主管</option>';
+                            }elseif($_SESSION['bfdyt_role']==1){
+                                echo '<option value="4">前台主管</option>';
+                                echo '<option value="5">后台主管</option>';
                             }
                          ?>
-                        <option value="2" selected="selected">后台客服</option>
-                        <option value="3" >前台邀约</option>
+                         <?php
+                            if($_SESSION['bfdyt_role']!=5){
+
+                                echo '<option value="3" >前台邀约</option>';
+                            }
+                            if($_SESSION['bfdyt_role']!=4){
+                                echo '<option value="2" selected="selected">后台客服</option>';
+                            }
+                          ?>
                     </select>
                 </div>
             </div>
              <div class="form-group w80">
                 <div class="label">
-                    <label>上级主管：</label>
+                    <label>所属校区：</label>
                 </div>
                 <div class="field w25">
                     <select name="fid"  id="fid">
                     <?php
-
+                        if($_SESSION['bfdyt_role']<=1){
                             echo '<option class="admin" value="'.$_SESSION['bfdyt_id'].'">'.$_SESSION['bfdyt_name'].'('.$_SESSION['bfdyt_username'].')'.'</option>';
+                        }
                         foreach ($leader as  $value) {
                             if($value['bfdyt_id']==$_SESSION['bfdyt_id']) continue;
                             echo '<option class="leader" value="'.$value['bfdyt_id'].'">'.$value['bfdyt_name'].'('.$value['bfdyt_username'].')'.'</option>';

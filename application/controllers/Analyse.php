@@ -6,22 +6,28 @@
 	{
 		function __construct(){
             parent::__construct();
-            if(!isset($_SESSION['bfdyt_username'])||$_SESSION['bfdyt_role']<0||$_SESSION['bfdyt_role']>3){
+            if(!isset($_SESSION['bfdyt_username'])||$_SESSION['bfdyt_role']<0||$_SESSION['bfdyt_role']>5){
                 header('Location:/login/');
                 exit;
             }
         }
         //年度每月信息量
         public function monthinfo($year=0){
-        	if($_SESSION['bfdyt_role']>1){
+        	if($_SESSION['bfdyt_role']>1&&$_SESSION['bfdyt_role']<4){
                  echo '<script>alert("你无权访问该信息")</script>';
                 exit;
             }
             //非管理账号限定只显示所在主管下的信息
             $this->load->database();
             $arr = array();
-            if($_SESSION['bfdyt_role']==1){//当前账户为校区主管
-                $this->db->where('bfdyt_fid' ,$_SESSION['bfdyt_id']);
+            if($_SESSION['bfdyt_role']==0){//当前账户为校区主管
+                $xqwhere = '1=1';
+            }else{
+                if($_SESSION['bfdyt_role']>=4){
+                    $this->db->where('bfdyt_fid' ,$_SESSION['bfdyt_fid']);
+                }else{
+                    $this->db->where('bfdyt_fid' ,$_SESSION['bfdyt_id']);
+                }
                 $this->db->select('bfdyt_id');
                 $res = $this->db->get('bfdyt_user');
                 $res_arr = $res->result_array();
@@ -30,8 +36,6 @@
                 }
                 $arr[] = $_SESSION['bfdyt_id'];
                 $xqwhere = ' (bfdyt_backuser in ('.(implode(',',$arr)).') or bfdyt_frontuser in ('.(implode(',',$arr)).'))';
-            }else{
-                $xqwhere = '1=1';
             }
 
             if(!$year){
@@ -64,15 +68,21 @@
         }
         //月份每日信息量
         public function dayinfo($year=0,$month = 0){
-        	if($_SESSION['bfdyt_role']>1){
+        	if($_SESSION['bfdyt_role']>1&&$_SESSION['bfdyt_role']<4){
                  echo '<script>alert("你无权访问该信息")</script>';
                 exit;
             }
             //非管理账号限定只显示所在主管下的信息
             $this->load->database();
             $arr = array();
-            if($_SESSION['bfdyt_role']==1){//当前账户为校区主管
-                $this->db->where('bfdyt_fid' ,$_SESSION['bfdyt_id']);
+            if($_SESSION['bfdyt_role']==0){//当前账户为校区主管
+                $xqwhere = '1=1';
+            }else{
+                if($_SESSION['bfdyt_role']>=4){
+                    $this->db->where('bfdyt_fid' ,$_SESSION['bfdyt_fid']);
+                }else{
+                    $this->db->where('bfdyt_fid' ,$_SESSION['bfdyt_id']);
+                }
                 $this->db->select('bfdyt_id');
                 $res = $this->db->get('bfdyt_user');
                 $res_arr = $res->result_array();
@@ -81,8 +91,6 @@
                 }
                 $arr[] = $_SESSION['bfdyt_id'];
                 $xqwhere = ' (bfdyt_backuser in ('.(implode(',',$arr)).') or bfdyt_frontuser in ('.(implode(',',$arr)).'))';
-            }else{
-                $xqwhere = '1=1';
             }
 
             if(!$year){
@@ -125,15 +133,21 @@
         }
         //地域分析
         public function areainfo(){
-        	if($_SESSION['bfdyt_role']>1){
+        	if($_SESSION['bfdyt_role']>1&&$_SESSION['bfdyt_role']<4){
                  echo '<script>alert("你无权访问该信息")</script>';
                 exit;
             }
             //非管理账号限定只显示所在主管下的信息
             $this->load->database();
             $arr = array();
-            if($_SESSION['bfdyt_role']==1){//当前账户为校区主管
-                $this->db->where('bfdyt_fid' ,$_SESSION['bfdyt_id']);
+            if($_SESSION['bfdyt_role']==0){
+                $xqwhere = '1=1';
+            }else{
+                if($_SESSION['bfdyt_role']>=4){
+                    $this->db->where('bfdyt_fid' ,$_SESSION['bfdyt_fid']);
+                }else{
+                    $this->db->where('bfdyt_fid' ,$_SESSION['bfdyt_id']);
+                }
                 $this->db->select('bfdyt_id');
                 $res = $this->db->get('bfdyt_user');
                 $res_arr = $res->result_array();
@@ -142,8 +156,6 @@
                 }
                 $arr[] = $_SESSION['bfdyt_id'];
                 $xqwhere = ' (bfdyt_backuser in ('.(implode(',',$arr)).') or bfdyt_frontuser in ('.(implode(',',$arr)).'))';
-            }else{
-                $xqwhere = '1=1';
             }
 
         	$start = $this->input->get('start',0);
@@ -232,15 +244,21 @@
         }
         //专业分析
         public function majorinfo(){
-        	if($_SESSION['bfdyt_role']>1){
+        	if($_SESSION['bfdyt_role']>1&&$_SESSION['bfdyt_role']<4){
                  echo '<script>alert("你无权访问该信息")</script>';
                 exit;
             }
             //非管理账号限定只显示所在主管下的信息
             $this->load->database();
             $arr = array();
-            if($_SESSION['bfdyt_role']==1){//当前账户为校区主管
-                $this->db->where('bfdyt_fid' ,$_SESSION['bfdyt_id']);
+            if($_SESSION['bfdyt_role']==0){//当前账户为校区主管
+                $xqwhere = '1=1';
+            }else{
+                if($_SESSION['bfdyt_role']>=4){
+                    $this->db->where('bfdyt_fid' ,$_SESSION['bfdyt_fid']);
+                }else{
+                    $this->db->where('bfdyt_fid' ,$_SESSION['bfdyt_id']);
+                }
                 $this->db->select('bfdyt_id');
                 $res = $this->db->get('bfdyt_user');
                 $res_arr = $res->result_array();
@@ -249,8 +267,6 @@
                 }
                 $arr[] = $_SESSION['bfdyt_id'];
                 $xqwhere = ' (bfdyt_backuser in ('.(implode(',',$arr)).') or bfdyt_frontuser in ('.(implode(',',$arr)).'))';
-            }else{
-                $xqwhere = '1=1';
             }
         	$start = $this->input->get('start',0);
         	$end = $this->input->get('end',0);
@@ -328,7 +344,7 @@
         }
         //转接数据
         public function transdinfo(){
-        	if($_SESSION['bfdyt_role']==3){
+        	if($_SESSION['bfdyt_role']==3||$_SESSION['bfdyt_role']==4){
                  echo '<script>alert("你无权访问该信息")</script>';
                 exit;
             }
@@ -346,11 +362,15 @@
         		$end=date('Y-m-d',strtotime($end));
         	}
 
-            if($_SESSION['bfdyt_role']<2){//主管账户权限
+            if($_SESSION['bfdyt_role']<2||$_SESSION['bfdyt_role']==5){//主管账户权限
                 if($_SESSION['bfdyt_role']==0){//主账户查看所有
                     $userwhere='';
                 }else{
-                    $userwhere=' AND (u.bfdyt_fid = '.$_SESSION['bfdyt_id'].' OR u.bfdyt_id = '.$_SESSION['bfdyt_id'].')';
+                    if($_SESSION['bfdyt_role']==5){
+                        $userwhere=' AND (u.bfdyt_fid = '.$_SESSION['bfdyt_fid'].' OR u.bfdyt_id = '.$_SESSION['bfdyt_id'].')';
+                    }else{
+                        $userwhere=' AND (u.bfdyt_fid = '.$_SESSION['bfdyt_id'].' OR u.bfdyt_id = '.$_SESSION['bfdyt_id'].')';
+                    }
                 }
 
                 $sql='SELECT  i.bfdyt_major as major,
@@ -430,7 +450,7 @@
         }
         //报名数据
         public function joininfo(){
-        	if($_SESSION['bfdyt_role']==2){
+        	if($_SESSION['bfdyt_role']==2||$_SESSION['bfdyt_role']==5){
                  echo '<script>alert("你无权访问该信息")</script>';
                 exit;
             }
@@ -448,11 +468,15 @@
         		$end=date('Y-m-d',strtotime($end));
         	}
 
-            if($_SESSION['bfdyt_role']<2){//主管账户权限
+            if($_SESSION['bfdyt_role']<2||$_SESSION['bfdyt_role']==4){//主管账户权限
                 if($_SESSION['bfdyt_role']==0){//主账户查看所有
                     $userwhere='';
                 }else{
-                    $userwhere=' AND (u.bfdyt_fid = '.$_SESSION['bfdyt_id'].' OR u.bfdyt_id = '.$_SESSION['bfdyt_id'].')';
+                    if($_SESSION['bfdyt_role']==4){
+                        $userwhere=' AND (u.bfdyt_fid = '.$_SESSION['bfdyt_fid'].' OR u.bfdyt_id = '.$_SESSION['bfdyt_id'].')';
+                    }else{
+                        $userwhere=' AND (u.bfdyt_fid = '.$_SESSION['bfdyt_fid'].' OR u.bfdyt_id = '.$_SESSION['bfdyt_id'].')';
+                    }
                 }
 
                 $sql='SELECT  i.bfdyt_major as major,
@@ -532,7 +556,7 @@
         }
         //信息导出页面
         public function getExcel(){
-            if($_SESSION['bfdyt_role']>1){
+            if($_SESSION['bfdyt_role']>1&&$_SESSION['bfdyt_role']<4){
                  echo '<script>alert("你无权访问该信息")</script>';
                 exit;
             }
@@ -540,13 +564,16 @@
             $this->load->database();
             $this->db->select('bfdyt_id,bfdyt_name');
             $this->db->where('bfdyt_role','1');
+            if($_SESSION['bfdyt_role']>=4){
+                $this->db->where('bfdyt_id',$_SESSION['bfdyt_fid']);
+            }
             $query = $this->db->get('bfdyt_user');
             $xqleaders = $query->result_array();
             $this->load->view('analyse/getexcel',array('xqlist'=>$xqleaders));
         }
         //执行信息导出到excel
         public function dogetExcel(){
-            if($_SESSION['bfdyt_role']>1){
+            if($_SESSION['bfdyt_role']>1&&$_SESSION['bfdyt_role']<4){
                  echo '<script>alert("你无权访问该信息")</script>';
                 exit;
             }

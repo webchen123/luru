@@ -52,8 +52,8 @@
             $ip=$_SERVER['REMOTE_ADDR'];
             $this->db->where('bfdyt_ip = "'.$ip.'" and bfdyt_logintime>='.$time.' and bfdyt_status = "0"');
             $loginFailNum = $this->db->count_all_results('bfdyt_log');
-            if($loginFailNum>=6){
-                echo '<script>alert("一小时内你已经连续5次登陆失败，请稍后再试");window.location.href="/login/"</script>';
+            if($loginFailNum>=10){
+                echo '<script>alert("短时间内登陆错误次数过多，请稍后再试");window.location.href="/login/"</script>';
                 exit;
             }
             $query =  $this->db->get_where('bfdyt_user',array('bfdyt_username'=>$username,'bfdyt_passwd'=>$passwd,'bfdyt_status'=>'1'));

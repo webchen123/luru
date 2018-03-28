@@ -56,7 +56,7 @@
     <ul>
         <li data-num="1" class="subMenu"><a  class="content" data-url="/student/add/"  site="1" href="javascript:;"  target="right"><span class="icon-caret-right"></span> 添加信息</a></li>
     </ul>
-    <?php  if($_SESSION['bfdyt_role']==0||$_SESSION['bfdyt_role']==1){?>
+    <?php  if($_SESSION['bfdyt_role']<=1||$_SESSION['bfdyt_role']>=4){?>
     <h2 class="on"><span class="icon-wrench"></span> 人员管理<span class="badge bg-yellow"></span></h2>
     <ul>
         <li data-num="1" class="subMenu"><a class="content" data-url="/user/"   site="1" href="javascript:;" target="right"><span class="icon-caret-right"></span> 人员列表</a></li>
@@ -64,7 +64,7 @@
         <li data-num="12" class="subMenu"><a  class="content" data-url="/login/loglist" site="1"  href="javascript:;"  target="right"><span class="icon-caret-right"></span> 登陆日志</a></li>
     </ul>
     <?php }
-    if($_SESSION['bfdyt_role']!=3){
+    if($_SESSION['bfdyt_role']!=3&&$_SESSION['bfdyt_role']!=4){
     ?>
     <h2 class="on"><span class="icon-pencil-square-o"></span>  后台咨询</h2>
     <ul>
@@ -75,7 +75,7 @@
     </ul>
     <?php
     }
-     if($_SESSION['bfdyt_role']!=2){
+     if($_SESSION['bfdyt_role']!=2&&$_SESSION['bfdyt_role']!=5){
     ?>
     <h2 class="on"><span class="icon-automobile (alias)"></span>  前台邀约 </h2>
     <ul>
@@ -88,24 +88,24 @@
     <h2 class="on"><span class="icon-wrench"></span>  数据分析</h2>
     <ul>
     <?php
-     if($_SESSION['bfdyt_role']<=1){
+     if($_SESSION['bfdyt_role']<=1||$_SESSION['bfdyt_role']>=4){
     ?>
         <li data-num="14" class="subMenu"><a  class="content" data-url="/analyse/monthinfo" site="1"  href="javascript:;" ><span class="icon-caret-right"></span> 总信息量</a></li>
         <li data-num="16" class="subMenu"><a  class="content" data-url="/analyse/areainfo" site="1"  href="javascript:;" ><span class="icon-caret-right"></span> 地域分布</a></li>
         <li data-num="17" class="subMenu"><a  class="content" data-url="/analyse/majorinfo" site="1"  href="javascript:;" ><span class="icon-caret-right"></span> 专业分析</a></li>
     <?php 
      }
-     if($_SESSION['bfdyt_role']!=3){
+     if($_SESSION['bfdyt_role']!=3&&$_SESSION['bfdyt_role']!=4){
       ?>
      <li data-num="18" class="subMenu"><a  class="content" data-url="/analyse/transdinfo" site="1"  href="javascript:;" ><span class="icon-caret-right"></span> 转接数据</a></li>
      <?php 
      }
-     if($_SESSION['bfdyt_role']!=2){
+     if($_SESSION['bfdyt_role']!=2&&$_SESSION['bfdyt_role']!=5){
      ?>
         <li data-num="19" class="subMenu"><a  class="content" data-url="/analyse/joininfo" site="1"  href="javascript:;" ><span class="icon-caret-right"></span> 报名数据</a></li>
     <?php 
       }
-      if($_SESSION['bfdyt_role']<=1){
+      if($_SESSION['bfdyt_role']<=1||$_SESSION['bfdyt_role']>=4){
      ?>
         <li data-num="20" class="subMenu"><a  class="content" data-url="/analyse/getexcel" site="1"  href="javascript:;" ><span class="icon-caret-right"></span> 导出数据</a></li>
     <?php 

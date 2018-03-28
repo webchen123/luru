@@ -79,7 +79,7 @@
                     <option value="0" <?php echo $isfull==='0'?'selected="selected"':'';?>>不完整信息</option>
                 </select>
             </li>
-            <?php if($_SESSION['bfdyt_role']<2){
+            <?php if($_SESSION['bfdyt_role']<2||$_SESSION['bfdyt_role']>3){
             ?>
 
             <li>

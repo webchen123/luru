@@ -4,7 +4,7 @@
 <div class="edit">
     <div class="panel admin-panel">
         <div class="padding border-bottom container-layout">
-            <?php if($_SESSION['bfdyt_role']<2){?>
+            <?php if($_SESSION['bfdyt_role']<2||$_SESSION['bfdyt_role']>3){?>
             <div class="form-group w80">
                 <div class="label">
                     <label>职位：</label>
@@ -12,22 +12,19 @@
                 <div class="field w25">
                     <select name="role"  id="role">
                          <?php
-                            if($info['bfdyt_role']==0){
-                                echo '<option value="0" selected="selected">系统管理员</option>';
-                            }else if($info['bfdyt_role']==1){
-                                echo '<option value="1" selected="selected">客服主管</option>';
-                            }else {
-                                $selected2 = $info['bfdyt_role']==2?'selected="selected"':'';
-                                $selected3 = $info['bfdyt_role']==3?'selected="selected"':'';
-                                echo '<option value="2" '.$selected2.'>后台客服</option><option value="3" '.$selected3.'>前台邀约</option>';
-                            }
+                         $rolearr=array('0'=>"超级管理员",'1'=>"校区管理",'2'=>'后台客服','3'=>'前台邀约','4'=>'前台主管','后台主管');
+                         foreach ($rolearr as $k => $v) {
+                             # code...
+                            $selected = $info['bfdyt_role']==$k?'selected="selected"':'';
+                            echo '<option value="'.$k.'" '.$selected.' disabled="disabled">'.$v.'</option>';
+                         }
                          ?>
                     </select>
                 </div>
             </div>
              <div class="form-group w80">
                 <div class="label">
-                    <label>上级主管：</label>
+                    <label>所属校区</label>
                 </div>
                 <div class="field w25">
                     <select name="fid"  id="fid">

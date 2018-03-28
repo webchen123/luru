@@ -6,7 +6,7 @@
     {
         function __construct(){
             parent::__construct();
-            if(!isset($_SESSION['bfdyt_username'])||$_SESSION['bfdyt_role']<0||$_SESSION['bfdyt_role']>3){
+            if(!isset($_SESSION['bfdyt_username'])||$_SESSION['bfdyt_role']<0||$_SESSION['bfdyt_role']>5){
                 header('Location:/login/');
                 exit;
             }
@@ -136,13 +136,18 @@
             }
             $num = 5;//每页显示条数
 
-            if($_SESSION['bfdyt_role']<2){//主管账户权限
+            if($_SESSION['bfdyt_role']<2||$_SESSION['bfdyt_role']==5){//主管账户权限
                 if($_SESSION['bfdyt_role']==0){//主账户查看所有
                     $userwhere='';
-                    $backuserswhere = ' bfdyt_role != 3';
+                    $backuserswhere = ' bfdyt_role not in("3","0","1","4","5") ';
                 }else{
-                    $userwhere=' AND (u.bfdyt_fid = '.$_SESSION['bfdyt_id'].' OR u.bfdyt_id = '.$_SESSION['bfdyt_id'].')';
-                    $backuserswhere = ' bfdyt_role = "2" AND bfdyt_fid = '.$_SESSION['bfdyt_id'].' OR bfdyt_id = '.$_SESSION['bfdyt_id'];
+                    if($_SESSION['bfdyt_role']==5){
+                        $userwhere=' AND (u.bfdyt_fid = '.$_SESSION['bfdyt_fid'].' OR u.bfdyt_id = '.$_SESSION['bfdyt_id'].')';
+                        $backuserswhere = ' bfdyt_role = "2" AND bfdyt_fid = '.$_SESSION['bfdyt_fid'];
+                    }else{
+                        $userwhere=' AND (u.bfdyt_fid = '.$_SESSION['bfdyt_id'].' OR u.bfdyt_id = '.$_SESSION['bfdyt_id'].')';
+                        $backuserswhere = ' bfdyt_role = "2" AND bfdyt_fid = '.$_SESSION['bfdyt_id'];
+                    }
                 }
 
                 $sql='SELECT i.bfdyt_zxdate as zxdate ,u.bfdyt_name as kfname,
@@ -159,7 +164,7 @@
                     FROM  bfdyt_studentinfo AS i,bfdyt_user AS u 
                     WHERE i.bfdyt_'.$usertype.'=u.bfdyt_id '.$userwhere.$wherecheck.$visitwhere;
                 //获取后台客服老师名单
-                $backuserquery = $this->db->query('select bfdyt_id,bfdyt_name from bfdyt_user ');
+                $backuserquery = $this->db->query('select bfdyt_id,bfdyt_name from bfdyt_user where '.$backuserswhere);
                 $data['backusers'] = $backuserquery->result_array();    
             }else{//普通后台客服
                 $sql='SELECT i.bfdyt_zxdate as zxdate ,u.bfdyt_name as kfname,
@@ -268,11 +273,15 @@
             //分页
             $num = 5;//每页显示条数
 
-            if($_SESSION['bfdyt_role']<2){//主管账户权限
+            if($_SESSION['bfdyt_role']<2||$_SESSION['bfdyt_role']==4){//主管账户权限
                 if($_SESSION['bfdyt_role']==0){//主账户查看所有
                     $userwhere='';
                 }else{
-                    $userwhere=' AND (u.bfdyt_fid = '.$_SESSION['bfdyt_id'].' OR u.bfdyt_id = '.$_SESSION['bfdyt_id'].')';
+                    if($_SESSION['bfdyt_role']==4){//前台主管
+                        $userwhere=' AND (u.bfdyt_fid = '.$_SESSION['bfdyt_fid'].' OR u.bfdyt_id = '.$_SESSION['bfdyt_id'].')';
+                    }else{
+                        $userwhere=' AND (u.bfdyt_fid = '.$_SESSION['bfdyt_id'].' OR u.bfdyt_id = '.$_SESSION['bfdyt_id'].')';
+                    }
                 }
 
                 $sql='SELECT i.bfdyt_zxdate as zxdate ,u.bfdyt_name as kfname,
@@ -638,7 +647,7 @@
         }
         //信息修改
         public function edit($id){
-            if($_SESSION['bfdyt_role']>1){
+            if($_SESSION['bfdyt_role']>1&&$_SESSION['bfdyt_role']<4){
                 echo '<script>alert("你无权访问该信息")</script>';
                 exit;
             }
@@ -660,7 +669,7 @@
         }
         //执行信息修改
         public function doedit(){
-            if($_SESSION['bfdyt_role']>1){
+            if($_SESSION['bfdyt_role']>1&&$_SESSION['bfdyt_role']<4){
                 echo '0';
                 exit;
             }
